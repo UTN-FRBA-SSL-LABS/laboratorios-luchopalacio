@@ -66,6 +66,47 @@ void test_carrito_lleno(void){
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
+ *  EJERCITACION EXTRA — E1
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+void test_buscar_primer_producto(void) {
+    printf("\n[buscar primer producto]\n");
+    Carrito c;
+    carrito_init(&c);
+
+    Producto p = {"Pan", 200, 1};
+    carrito_agregar(&c, p);
+
+    ASSERT_IGUAL(0, carrito_buscar(&c, "Pan"));
+}
+
+void test_buscar_producto(void) {
+    printf("\n[buscar un producto]\n");
+    Carrito c;
+    carrito_init(&c);
+
+    Producto p1 = {"Pan", 200, 1};
+    Producto p2 = {"Leche", 350, 2};
+
+    carrito_agregar(&c, p1);
+    carrito_agregar(&c, p2);
+
+    ASSERT_IGUAL(1, carrito_buscar(&c, "Leche"));
+}
+
+void test_buscar_inexistente(void) {
+    printf("\n[buscar producto inexistente]\n");
+    Carrito c;
+    carrito_init(&c);
+
+    Producto p = {"Pan", 200, 1};
+    carrito_agregar(&c, p);
+
+    ASSERT_IGUAL(-1, carrito_buscar(&c, "Leche"));
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
  *  main
  * ═══════════════════════════════════════════════════════════════════════════ */
 
@@ -75,7 +116,11 @@ int main(void) {
     test_agregar_uno();
     test_total_precio_unitario(); 
     test_total_con_cantidad();    
-    test_carrito_lleno();        
+    test_carrito_lleno();
+    //test ejercitacion extra 1
+    test_buscar_primer_producto();   
+    test_buscar_producto();    
+    test_buscar_inexistente(); 
     RESUMEN();
     return EXIT_CODE();
 }
