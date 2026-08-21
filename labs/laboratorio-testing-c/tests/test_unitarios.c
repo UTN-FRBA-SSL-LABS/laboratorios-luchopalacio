@@ -105,6 +105,34 @@ void test_buscar_inexistente(void) {
     ASSERT_IGUAL(-1, carrito_buscar(&c, "Leche"));
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+ *  EJERCITACION EXTRA — E2
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+void test_total_ignora_cantidad_cero(void) {
+    Carrito c;
+    carrito_init(&c);
+
+    Producto p1 = {"Pan", 200, 3};
+    Producto p2 = {"Leche", 350, 0};
+
+    carrito_agregar(&c, p1);
+    carrito_agregar(&c, p2);
+
+    ASSERT_IGUAL(600, carrito_total(&c));
+}
+
+void test_total_ignora_cantidad_negativa(void) {
+    Carrito c;
+    carrito_init(&c);
+
+    Producto p = {"Leche", 350, -2};
+
+    carrito_agregar(&c, p);
+
+    ASSERT_IGUAL(0, carrito_total(&c));
+}
+
 
 /* ═══════════════════════════════════════════════════════════════════════════
  *  main
@@ -121,6 +149,9 @@ int main(void) {
     test_buscar_primer_producto();   
     test_buscar_producto();    
     test_buscar_inexistente(); 
+    //test ejercitacion extra 2
+    test_total_ignora_cantidad_cero();
+    test_total_ignora_cantidad_negativa();
     RESUMEN();
     return EXIT_CODE();
 }
