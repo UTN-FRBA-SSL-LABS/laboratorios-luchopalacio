@@ -301,7 +301,7 @@ cat salidas/test_integracion.txt
 ```
 
 ```
-TEST_INTEGRACION_PASA=
+TEST_INTEGRACION_PASA=SI
 ```
 _(SI o NO)_
 
@@ -319,7 +319,7 @@ Escribí `test_agregar_hasta_llenar()` en el lugar `/* PARTE E */`. Este test de
 Descomentá `/* test_agregar_hasta_llenar(); */` en el `main()`, compilá y corré.
 
 ```
-TEST_LLENAR_PASA=
+TEST_LLENAR_PASA=SI
 ```
 _(SI o NO)_
 
@@ -338,10 +338,10 @@ Las líneas con `#####` nunca se ejecutaron — no están cubiertas por los test
 
 **P10** — ¿Hay alguna línea de `carrito.c` con `#####`? ¿Cuál y por qué no se ejecutó?
 
-> R:
+> R: Si, hay líneas con #####: las líneas 29 y 30, correspondientes a carrito_descuento. No se ejecutaron porque ninguno de los tests realizados hasta el momento llamo a carrito_descuento, por lo que gcov indica que esas lineas nunca fueron ejecutadas, lo cual es raro porque si se llama a esa funcion en test_integracion (./test_cobertura solo testea las funcioes de test_unitarios)
 
 ```
-COBERTURA_COMPLETA=
+COBERTURA_COMPLETA=NO
 ```
 _(SI si todas las líneas están cubiertas, NO si hay alguna con #####)_
 
@@ -351,27 +351,27 @@ _(SI si todas las líneas están cubiertas, NO si hay alguna con #####)_
 
 **P11** — ¿Qué diferencia hay entre un test unitario y uno de integración? ¿Cuál de los dos detectó primero el bug de `carrito_total`?
 
-> R:
+> R: Un test unitario prueba una funcion de manera aislada, para verificar que funciona correctamente por si solo. En cambio, un test de integracion verifica que varias funciones trabajen correctamente en conjunto. El bug de carrito_total fue detectado primero por el test unitario, porque test_total_con_cantidad() verifico especificamente que el total tuviera en cuenta la cantidad de cada producto.
 
 **P12** — El bug de capacidad en `carrito_agregar` causa un **buffer overflow**: se escribe más allá del array. ¿Por qué esto es peligroso en C pero no ocurriría en un lenguaje como Python o Java?
 
-> R:
+> R: En C los arrays no realizan automaticamente una comprobacion de limites, si se intenta escribir en una posicion fuera del array, como items[4] cuando el maximo índice valido es 3, se puede sobrescribir otra zona de memoria. Esto puede provocar errores o fallos del programa. En lenguajes como Python o Java, los arrays/listas realizan comprobaciones de limites, por lo que intentar acceder a una posicion inexistente genera una excepcion en lugar de escribir directamente fuera de la memoria reservada
 
 **P13** — En este laboratorio encontraste los bugs escribiendo tests. ¿Qué tiene de mejor este enfoque frente a mirar el código directamente?
 
-> R:
+> R: Es mejor porque los tests permiten comprobar el comportamiento real del programa y detectar errores de forma objetiva, en lugar de depender solamente de leer el codigo y suponer que funciona correctamente. Ademas, los tests permiten reproducir el error, verificar que fue corregido y comprobar que los cambios realizados no introdujeron nuevos errores. 
 
 **P14** — El test `test_total_precio_unitario` (cantidad = 1) **pasó** a pesar del bug, mientras que `test_total_con_cantidad` (cantidad = 2) **falló**. ¿Por qué el primer test no detectó el bug?
 
-> R:
+> R: Porque cuando la cantidad es 1, multiplicar el precio por la cantidad no cambia el resultado. El codigo con el bug devuelve el precio unitario, que coincide con el resultado esperado (350 × 1 = 350). Por eso el test pasa aunque exista el bug. El test con cantidad 2 si lo detecta porque el resultado correcto (350 × 2 = 700) es diferente del que devuelve la funcion con el bug (350)
 
 ```
-BUG_EN_FUNCION_1=
+BUG_EN_FUNCION_1=carrito_total
 ```
 _(nombre de la función con el primer bug)_
 
 ```
-BUG_EN_FUNCION_2=
+BUG_EN_FUNCION_2=carrito_agregar
 ```
 _(nombre de la función con el segundo bug)_
 
